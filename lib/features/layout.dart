@@ -29,7 +29,11 @@ class AppLayout extends StatelessWidget {
           ),
           body: screens[cubit.navIndex],
           floatingActionButton: FloatingActionButton(
-            onPressed: () => Navigator.push(context, TaskScreen.navTo()),
+            onPressed: () => showModalBottomSheet(
+              isScrollControlled: true,
+              context: context,
+              builder: (context) => const TaskScreen(),
+            ),
             child: const Icon(
               Icons.add,
               color: Colors.white,

@@ -31,11 +31,11 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  void dbInsert({
+  Future<void> dbInsert({
     required String title,
     required int priority,
     required String type,
-  }) {
+  }) async {
     emit(DBInsertLoading());
     try {
       SqfliteHelper.dbInsert(title: title, priority: priority, type: type);
