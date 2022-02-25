@@ -13,7 +13,10 @@ class EmptyScreen extends StatelessWidget {
         children: [
           Icon(Icons.find_in_page, size: height * 0.2),
           const SizedBox(height: kSmallSpacing),
-          const Text('There are no tasks here!'),
+          const Text(
+            'There are no tasks here!',
+            style: TextStyle(fontSize: 18),
+          ),
         ],
       ),
     );

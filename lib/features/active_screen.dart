@@ -8,8 +8,8 @@ import 'package:todo_app/widgets/todo_item.dart';
 
 import '../blocs/app_bloc/app_states.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class ActiveScreen extends StatelessWidget {
+  const ActiveScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

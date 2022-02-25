@@ -27,15 +27,15 @@ class SqfliteHelper {
   }
 
   static Future<List> dbGetType({required String type}) async =>
-     await _database.rawQuery('SELECT * FROM Todo WHERE Type == ?', [type]);
+      await _database.rawQuery('SELECT * FROM Todo WHERE Type == ?', [type]);
 
-  static void dbInsert({
+  static Future<void> dbInsert({
     required String title,
     required int priority,
     required String type,
-  }) {
+  }) async {
     DateTime now = DateTime.now();
-    String currentDate = DateTime(now.day, now.month, now.year).toString();
+    String currentDate = '${now.day}-${now.month}-${now.year}';
     _database.transaction((txn) async {
       await txn.rawInsert(
           'INSERT INTO Todo('
@@ -47,6 +47,9 @@ class SqfliteHelper {
           [title, priority, currentDate, type]);
     });
   }
+
+  static Future<int> dbUpdate(String type, int id) async => await _database
+      .rawUpdate('UPDATE Todo SET Type = ? WHERE Id = ?', [type, id]);
 
   static Future<int> dbDelete(int id) async =>
       await _database.rawDelete('DELETE FROM Todo WHERE Id = ?', [id]);

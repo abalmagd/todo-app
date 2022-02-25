@@ -10,9 +10,8 @@ class AppCubit extends Cubit<AppStates> {
 
   int navIndex = 0;
   List activeTasks = [];
-  List doneTasks = [];
   List archivedTasks = [];
-  List trashTasks = [];
+  List doneTasks = [];
 
   void changeNavIndex({required int index}) {
     navIndex = index;
@@ -22,27 +21,78 @@ class AppCubit extends Cubit<AppStates> {
   void dbGetType({required String type}) {
     emit(DBGetTypeLoading());
     SqfliteHelper.dbGetType(type: type).then((value) {
-      activeTasks = value;
-      debugPrint('Last element in ${activeTasks.last}');
+      type == 'Active'
+          ? activeTasks = value
+          : type == 'Done'
+              ? doneTasks = value
+              : archivedTasks = value;
+      debugPrint('DB get $type tasks => #${activeTasks.length} task');
       emit(DBGetTypeSuccess());
     }).catchError((error) {
-      debugPrint('DB Get $type failed => $error');
+      debugPrint('DB get $type failed => $error');
       emit(DBGetTypeFailed());
     });
   }
 
-  Future<void> dbInsert({
+  void dbInsert({
     required String title,
     required int priority,
     required String type,
-  }) async {
+  }) {
     emit(DBInsertLoading());
-    try {
-      SqfliteHelper.dbInsert(title: title, priority: priority, type: type);
-      emit(DBInsertSuccess());
-    } catch (error) {
-      debugPrint('DB Insert $type failed => $error');
-      emit(DBInsertFailed());
-    }
+    SqfliteHelper.dbInsert(
+      title: title,
+      priority: priority,
+      type: type,
+    ).then(
+      (value) {
+        emit(DBInsertSuccess());
+        dbGetType(type: type);
+      },
+    ).catchError(
+      (error) {
+        debugPrint('DB Insert $type failed => $error');
+        emit(DBInsertFailed());
+      },
+    );
+  }
+
+  void dbDelete({
+    required int id,
+    required String type,
+  }) {
+    emit(DBDeleteLoading());
+    SqfliteHelper.dbDelete(id).then(
+      (value) {
+        emit(DBDeleteSuccess());
+        dbGetType(type: type);
+        debugPrint('DB delete id => #$id');
+      },
+    ).catchError(
+      (error) {
+        debugPrint('DB delete id  #$id failed => $error');
+        emit(DBDeleteFailed());
+      },
+    );
+  }
+
+  void dbUpdate({
+    required int id,
+    required String typeTo,
+    required String typeFrom,
+  }) {
+    emit(DBUpdateLoading());
+    SqfliteHelper.dbUpdate(typeTo, id).then(
+      (value) {
+        emit(DBUpdateSuccess());
+        dbGetType(type: typeFrom);
+        debugPrint('DB update id => #$id');
+      },
+    ).catchError(
+      (error) {
+        debugPrint('DB update id  #$id failed => $error');
+        emit(DBUpdateFailed());
+      },
+    );
   }
 }

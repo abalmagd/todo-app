@@ -5,7 +5,6 @@ import 'package:todo_app/core/local/sqflite_helper.dart';
 import 'package:todo_app/features/layout.dart';
 import 'package:todo_app/theme/custom_theme.dart';
 
-import 'blocs/app_bloc/app_states.dart';
 import 'blocs/bloc_observer.dart';
 
 Future<void> main() async {

@@ -15,3 +15,19 @@ class DBInsertLoading extends AppStates {}
 class DBInsertSuccess extends AppStates {}
 
 class DBInsertFailed extends AppStates {}
+
+class DBDeleteLoading extends AppStates {}
+
+class DBDeleteSuccess extends AppStates {}
+
+class DBDeleteFailed extends AppStates {}
+
+class DBUpdateLoading extends AppStates {}
+
+class DBUpdateSuccess extends AppStates {}
+
+class DBUpdateFailed extends AppStates {}
+
+class DBCloseSuccess extends AppStates {}
+
+class DBCloseFailed extends AppStates {}
