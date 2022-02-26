@@ -95,4 +95,15 @@ class AppCubit extends Cubit<AppStates> {
       },
     );
   }
+
+  void dbClear() {
+    emit(DBClearLoading());
+    SqfliteHelper.dbClear().then((value) {
+      emit(DBClearSuccess());
+      debugPrint('DB clear success => #$value');
+    }).catchError((error) {
+      emit(DBClearFailed());
+      debugPrint('DB clear failed => $error');
+    });
+  }
 }

@@ -25,7 +25,22 @@ class AppLayout extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(title: const Text('Todo App')),
+          appBar: AppBar(
+            title: const Text('Todo App'),
+            actions: [
+              PopupMenuButton(
+                onSelected: (_) => cubit.dbClear(),
+                itemBuilder: (BuildContext context) {
+                  return {'Clear all'}.map((String choice) {
+                    return PopupMenuItem<String>(
+                      value: choice,
+                      child: Text(choice),
+                    );
+                  }).toList();
+                },
+              ),
+            ],
+          ),
           body: screens[cubit.navIndex],
           floatingActionButton: FloatingActionButton(
             onPressed: () => showModalBottomSheet(

@@ -31,3 +31,9 @@ class DBUpdateFailed extends AppStates {}
 class DBCloseSuccess extends AppStates {}
 
 class DBCloseFailed extends AppStates {}
+
+class DBClearLoading extends AppStates {}
+
+class DBClearSuccess extends AppStates {}
+
+class DBClearFailed extends AppStates {}
