@@ -42,17 +42,19 @@ class AppLayout extends StatelessWidget {
             ],
           ),
           body: screens[cubit.navIndex],
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => showModalBottomSheet(
-              isScrollControlled: true,
-              context: context,
-              builder: (context) => const TaskForm(),
-            ),
-            child: const Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-          ),
+          floatingActionButton: cubit.navIndex == 0
+              ? FloatingActionButton(
+                  onPressed: () => showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) => const TaskForm(),
+                  ),
+                  child: const Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                )
+              : null,
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             currentIndex: cubit.navIndex,

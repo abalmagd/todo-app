@@ -99,6 +99,9 @@ class AppCubit extends Cubit<AppStates> {
   void dbClear() {
     emit(DBClearLoading());
     SqfliteHelper.dbClear().then((value) {
+      activeTasks = [];
+      archivedTasks = [];
+      doneTasks = [];
       emit(DBClearSuccess());
       debugPrint('DB clear success => #$value');
     }).catchError((error) {

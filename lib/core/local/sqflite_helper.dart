@@ -55,7 +55,7 @@ class SqfliteHelper {
       await _database.rawDelete('DELETE FROM Todo WHERE Id = ?', [id]);
 
   static Future<int> dbClear() async =>
-      await _database.rawDelete('DELETE * FROM Todo');
+      await _database.rawDelete('DELETE FROM Todo');
 
   static void dbClose() {
     debugPrint('Todo Database closed');
